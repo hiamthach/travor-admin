@@ -1,9 +1,13 @@
-import SignInForm from '@/components/feature/auth/SignInForm';
+'use client';
 
-export default async function Home() {
+import { withAuth } from '@/hocs/withAuth';
+
+const HomePage = () => {
   return (
-    <main className="bg-white h-screen w-full flex justify-center items-center">
-      <SignInForm />
-    </main>
+    <>
+      <h1>Home Page</h1>
+    </>
   );
-}
+};
+
+export default withAuth(HomePage);

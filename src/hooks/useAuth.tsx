@@ -1,10 +1,14 @@
-import { ReactNode, createContext, useContext, useState } from 'react';
+'use client';
+
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { CookiesProvider } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 
 import authApi from '@/config/api/auth.api';
-import toastHelpers from '@/config/helpers/toast';
-import { LoginReq } from '@/config/types/auth';
+import toastHelpers from '@/config/helpers/toast.helper';
+import { LoginReq } from '@/config/types/auth.type';
 
-const { signIn } = authApi;
+const { signIn, renewAccessToken } = authApi;
 
 interface IAuthValue {
   isAuth: boolean;
@@ -29,7 +33,46 @@ export const AuthContext = createContext<IAuthValue>({
 function useAuth() {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const [cookies, setCookie, removeCookie] = useCookies(['refreshToken', 'accessToken', 'currentUser']);
+
+  const handleSignOut = async () => {
+    setIsAuth(false);
+    setCurrentUser(null);
+    toastHelpers.success('Logout');
+
+    // remove cookie
+    removeCookie('refreshToken', { path: '/' });
+    removeCookie('accessToken', { path: '/' });
+    removeCookie('currentUser', { path: '/' });
+  };
+
+  useEffect(() => {
+    if (cookies.refreshToken && cookies.accessToken && cookies.currentUser) {
+      setIsAuth(true);
+      setCurrentUser(cookies.currentUser);
+      setLoading(false);
+    } else if (cookies.refreshToken && !cookies.accessToken) {
+      renewAccessToken({
+        refresh_token: cookies.refreshToken,
+      })
+        .then((res) => {
+          setCookie('accessToken', res.access_token, {
+            path: '/',
+            expires: new Date(res.access_token_expires_at),
+          });
+        })
+        .catch(() => {
+          handleSignOut();
+        });
+    } else {
+      setIsAuth(false);
+      setCurrentUser(null);
+      setLoading(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cookies.accessToken, cookies.currentUser, cookies.refreshToken]);
 
   const values: IAuthValue = {
     isAuth,
@@ -42,6 +85,22 @@ function useAuth() {
           setIsAuth(true);
           setCurrentUser(res);
 
+          // set cookie
+          setCookie('refreshToken', res.refresh_token, {
+            path: '/',
+            expires: new Date(res.refresh_token_expires_at),
+          });
+
+          setCookie('accessToken', res.access_token, {
+            path: '/',
+            expires: new Date(res.access_token_expires_at),
+          });
+
+          setCookie('currentUser', JSON.stringify(res), {
+            path: '/',
+            expires: new Date(res.refresh_token_expires_at),
+          });
+
           toastHelpers.success('Login successfully');
         } else {
           toastHelpers.error('Login failed');
@@ -52,8 +111,7 @@ function useAuth() {
     },
 
     signOut: async () => {
-      setIsAuth(false);
-      setCurrentUser(null);
+      handleSignOut();
     },
   };
 
@@ -62,8 +120,14 @@ function useAuth() {
 
 export const AuthProvider = ({ children }: IAuthProvider) => {
   const auth = useAuth();
-  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+
+  return (
+    <CookiesProvider>
+      <AuthContext.Provider value={auth}>{!auth.loading ? children : null}</AuthContext.Provider>
+    </CookiesProvider>
+  );
 };
+
 export default function AuthConsumer() {
   return useContext(AuthContext);
 }

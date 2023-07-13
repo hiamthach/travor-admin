@@ -20,3 +20,12 @@ export interface LoginRes {
   access_token_expires_at: string;
   refresh_token_expires_at: string;
 }
+
+export interface RenewTokenReq {
+  refresh_token: string;
+}
+
+export interface RenewTokenRes {
+  access_token: string;
+  access_token_expires_at: string;
+}

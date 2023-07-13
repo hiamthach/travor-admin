@@ -63,7 +63,7 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
       withGlobalStyles
       withNormalizeCSS
     >
-      <Notifications />
+      <Notifications position="top-right" />
       {children}
     </MantineProvider>
   );
