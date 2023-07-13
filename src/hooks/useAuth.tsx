@@ -1,5 +1,7 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { CookiesProvider } from 'react-cookie';
 import { useCookies } from 'react-cookie';
@@ -37,6 +39,8 @@ function useAuth() {
 
   const [cookies, setCookie, removeCookie] = useCookies(['refreshToken', 'accessToken', 'currentUser']);
 
+  const router = useRouter();
+
   const handleSignOut = async () => {
     setIsAuth(false);
     setCurrentUser(null);
@@ -62,6 +66,10 @@ function useAuth() {
             path: '/',
             expires: new Date(res.access_token_expires_at),
           });
+          setIsAuth(true);
+          setLoading(false);
+          setCurrentUser(cookies.currentUser);
+          router.push('/');
         })
         .catch(() => {
           handleSignOut();
@@ -102,6 +110,8 @@ function useAuth() {
           });
 
           toastHelpers.success('Login successfully');
+
+          router.push('/');
         } else {
           toastHelpers.error('Login failed');
         }
