@@ -9,7 +9,7 @@ module.exports = {
     extend: {
       backgroundColor: {
         card: '#faf8fd',
-        primary: '#FAF9FE',
+        main: '#FAF9FE',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
