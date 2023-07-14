@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { IconMap2, IconPlaneDeparture } from '@tabler/icons-react';
+import { IconLogout, IconMap2, IconPlaneDeparture } from '@tabler/icons-react';
 
 import Logo from '../shared/Logo';
 
+import AuthConsumer from '@/hooks/useAuth';
 import { clsx } from '@mantine/core';
 
 const listNav = [
@@ -26,17 +27,19 @@ const listNav = [
 const Sidebar = () => {
   const pathname = usePathname();
 
+  const { signOut } = AuthConsumer();
+
   return (
-    <nav className="px-4 py-6">
+    <nav className="px-4 py-6 h-full flex flex-col">
       <Logo />
 
-      <div className="flex gap-2 flex-col items-center justify-center h-full mt-8">
+      <div className="flex gap-2 flex-col mt-8 flex-1">
         {listNav.map((item, index) => (
           <Link
             key={index}
             href={item.url}
             className={clsx(
-              'flex items-center gap-3 w-full px-4 py-3 rounded-2xl text-primary hover:bg-gray-200',
+              'flex items-center gap-3 w-full px-4 py-3 rounded-2xl text-heading hover:bg-gray-200',
               pathname.includes(item.url) && 'bg-primary text-white hover:bg-primary hover:opacity-90',
             )}
           >
@@ -44,6 +47,14 @@ const Sidebar = () => {
             {item.name}
           </Link>
         ))}
+      </div>
+
+      <div
+        onClick={signOut}
+        className="flex items-center gap-3 w-full h-fit px-4 py-3 rounded-2xl text-red-600 hover:bg-red-100 cursor-pointer"
+      >
+        <IconLogout />
+        <span>Logout</span>
       </div>
     </nav>
   );

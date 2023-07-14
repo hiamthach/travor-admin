@@ -1,3 +1,5 @@
+'use client';
+
 import { ReactNode } from 'react';
 
 import { MantineProvider } from '@mantine/core';
@@ -11,11 +13,11 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
         colorScheme: 'light',
         colors: {
           primary: [
-            '#ff621f',
             '#ff7235',
             '#ff814c',
             '#ff9162',
             '#ffa179',
+            '#ff621f',
             '#ffb18f',
             '#ffc0a5',
             '#ffd0bc',
@@ -25,7 +27,7 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
         },
 
         primaryColor: 'primary',
-        primaryShade: 1,
+        primaryShade: 4,
 
         components: {
           Button: {
@@ -63,7 +65,7 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
       withGlobalStyles
       withNormalizeCSS
     >
-      <Notifications position="top-right" />
+      <Notifications position="top-right" autoClose={3000} />
       {children}
     </MantineProvider>
   );

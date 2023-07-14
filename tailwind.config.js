@@ -22,7 +22,7 @@ module.exports = {
       },
 
       textColor: {
-        primary: '#1f3347',
+        heading: '#1f3347',
         pgr: '#595959',
       },
 
