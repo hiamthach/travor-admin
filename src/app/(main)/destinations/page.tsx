@@ -20,7 +20,7 @@ const items = [
 const { getDestinations } = destinationApi;
 
 const DestinationsPage = () => {
-  const { data, isLoading, isError } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     ['destinations'],
     async () => {
       const res = await getDestinations({
@@ -48,7 +48,7 @@ const DestinationsPage = () => {
       <div className="mt-5">
         <Skeleton visible={isLoading}>
           {data?.destinations && data?.destinations.length > 0 && (
-            <DestinationsTable destinations={data?.destinations} />
+            <DestinationsTable destinations={data?.destinations} refetch={refetch} />
           )}
         </Skeleton>
       </div>

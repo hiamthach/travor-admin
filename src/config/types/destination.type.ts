@@ -10,3 +10,7 @@ export type Destination = {
   area: string;
   location: string;
 };
+
+export type DestinationForm = Omit<Destination, 'id'>;
+
+export type DestinationUpdate = Partial<Destination>;

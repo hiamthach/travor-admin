@@ -6,14 +6,18 @@ import { IconEdit, IconEye, IconTrash } from '@tabler/icons-react';
 import React from 'react';
 
 import ConfirmPopover from '@/components/shared/ConfirmPopover';
+import destinationApi from '@/config/api/destination.api';
 import { Destination } from '@/config/types/destination.type';
 import { ActionIcon, Table } from '@mantine/core';
 
+const { deleteDestination } = destinationApi;
+
 interface Props {
   destinations: Destination[];
+  refetch: () => void;
 }
 
-const DestinationsTable = ({ destinations }: Props) => {
+const DestinationsTable = ({ destinations, refetch }: Props) => {
   return (
     <Table verticalSpacing="sm">
       <thead>
@@ -53,8 +57,10 @@ const DestinationsTable = ({ destinations }: Props) => {
                 </Link>
                 <ConfirmPopover
                   message="Are you sure to delete this?"
-                  onConfirm={() => {
-                    console.log(destination.id);
+                  onConfirm={async () => {
+                    deleteDestination(destination.id).then(() => {
+                      refetch();
+                    });
                   }}
                 >
                   <ActionIcon>
