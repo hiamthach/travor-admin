@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react';
 
-import { MantineProvider } from '@mantine/core';
+import { ButtonStylesParams, MantineProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 
 const ThemeProvider = ({ children }: { children: ReactNode }) => {
@@ -13,16 +13,16 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
         colorScheme: 'light',
         colors: {
           primary: [
-            '#ff7235',
-            '#ff814c',
-            '#ff9162',
-            '#ffa179',
+            '#ff621f',
+            '#ff621f',
+            '#ff621f',
+            '#ff621f',
             '#ff621f',
             '#ffb18f',
-            '#ffc0a5',
-            '#ffd0bc',
-            '#ffe0d2',
-            '#ffefe9',
+            '#ffb18f',
+            '#ffb18f',
+            '#ffb18f',
+            '#ffb18f',
           ],
         },
 
@@ -34,16 +34,24 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
             defaultProps: {
               radius: '200px',
             },
-            styles: {
+            styles: (theme, params: ButtonStylesParams, { size, variant }) => ({
               root: {
-                padding: '10px 25px',
-                fontWeight: 700,
-                fontSize: '18px',
-                color: '#fff',
-                height: '50px',
-                width: 'fit-content',
+                'padding': size === 'sm' ? '6px 12px' : '10px 25px',
+                'fontWeight': 700,
+                'fontSize': size === 'sm' ? '14px' : '18px',
+                'height': size === 'sm' ? 'fit-content' : '50px',
+                'width': 'fit-content',
+
+                ':hover': {
+                  backgroundColor: variant === 'outline' ? theme.colors[params.color || theme.primaryColor][4] : '',
+                  color: variant === 'outline' ? '#fff' : '',
+                },
               },
-            },
+
+              sm: {
+                padding: '6px 12px',
+              },
+            }),
           },
 
           Input: {

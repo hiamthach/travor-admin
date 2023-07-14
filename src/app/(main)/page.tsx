@@ -31,7 +31,7 @@ const stats: IStat[] = [
 
 const HomePage = () => {
   return (
-    <div className="w-full py-6 px-10 max-w-5xl">
+    <div className="w-full max-w-5xl">
       <SimpleGrid cols={3} className="w-full">
         {stats.map((stat, index) => {
           return (
