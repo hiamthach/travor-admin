@@ -2,11 +2,13 @@
 
 import Link from 'next/link';
 
+import { IconPlus } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 
 import DestinationsTable from '@/components/feature/destinations/DestinationsTable';
 import destinationApi from '@/config/api/destination.api';
-import { Breadcrumbs, Skeleton } from '@mantine/core';
+import useDocumentTitle from '@/hooks/useDocumentTitle';
+import { Breadcrumbs, Button, Skeleton } from '@mantine/core';
 
 const items = [
   { title: 'Home', href: '/' },
@@ -20,6 +22,8 @@ const items = [
 const { getDestinations } = destinationApi;
 
 const DestinationsPage = () => {
+  useDocumentTitle('Destinations');
+
   const { data, isLoading, isError, refetch } = useQuery(
     ['destinations'],
     async () => {
@@ -43,9 +47,14 @@ const DestinationsPage = () => {
     <div>
       <Breadcrumbs>{items}</Breadcrumbs>
 
-      <h3 className="mt-5 font-bold text-24 text-heading">Destinations</h3>
+      <div className="flex justify-between items-center my-5">
+        <h3 className="font-bold text-24 text-heading">Destinations</h3>
+        <Link href="/destinations/create">
+          <Button leftIcon={<IconPlus size={20} />}>New</Button>
+        </Link>
+      </div>
 
-      <div className="mt-5">
+      <div className="">
         <Skeleton visible={isLoading}>
           {data?.destinations && data?.destinations.length > 0 && (
             <DestinationsTable destinations={data?.destinations} refetch={refetch} />

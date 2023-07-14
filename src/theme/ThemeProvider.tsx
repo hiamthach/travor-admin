@@ -59,11 +59,14 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
               input: {
                 backgroundColor: '#fff',
                 padding: '12px 20px',
-                borderRadius: '200px',
+                borderRadius: '24px',
                 color: '#595959',
                 fontSize: '14px',
                 lineHeight: '20px',
                 height: 'fit-content',
+              },
+              label: {
+                marginBottom: '8px',
               },
             },
           },
