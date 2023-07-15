@@ -3,12 +3,17 @@
 import Link from 'next/link';
 
 import { IconEdit, IconEye, IconTrash } from '@tabler/icons-react';
-import React from 'react';
+import React, { useState } from 'react';
 
 import ConfirmPopover from '@/components/shared/ConfirmPopover';
+
 import destinationApi from '@/config/api/destination.api';
 import { Destination } from '@/config/types/destination.type';
-import { ActionIcon, Table } from '@mantine/core';
+
+import DestinationsView from './DestinationsView';
+
+import { ActionIcon, Modal, Table } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 const { deleteDestination } = destinationApi;
 
@@ -18,6 +23,9 @@ interface Props {
 }
 
 const DestinationsTable = ({ destinations, refetch }: Props) => {
+  const [opened, { open, close }] = useDisclosure(false);
+  const [viewDestination, setViewDestination] = useState<Destination>();
+
   return (
     <Table verticalSpacing="sm">
       <thead>
@@ -45,12 +53,15 @@ const DestinationsTable = ({ destinations, refetch }: Props) => {
             <td>{destination.price}</td>
             <td>
               <div className="flex gap-1 items-center justify-end">
-                <Link href={`/destinations/${destination.id}`} className="hover:opacity-90 leading-1">
-                  <ActionIcon>
-                    <IconEye size={20} className="text-cyan-500" />
-                  </ActionIcon>
-                </Link>
-                <Link href={`/destinations/${destination.id}/edit`} className="hover:opacity-90 leading-1">
+                <ActionIcon
+                  onClick={() => {
+                    setViewDestination(destination);
+                    open();
+                  }}
+                >
+                  <IconEye size={20} className="text-cyan-500" />
+                </ActionIcon>
+                <Link href={`/destinations/edit/${destination.id}`} className="hover:opacity-90 leading-1">
                   <ActionIcon>
                     <IconEdit size={20} className="text-secondary" />
                   </ActionIcon>
@@ -72,6 +83,10 @@ const DestinationsTable = ({ destinations, refetch }: Props) => {
           </tr>
         ))}
       </tbody>
+
+      <Modal size={'lg'} opened={opened} onClose={close} title={'View Destination'}>
+        {viewDestination && <DestinationsView data={viewDestination} />}
+      </Modal>
     </Table>
   );
 };
