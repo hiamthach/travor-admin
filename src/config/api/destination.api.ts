@@ -1,14 +1,10 @@
-import { Destination, DestinationForm, DestinationUpdate } from '@/config/types/destination.type';
+import { Destination, DestinationForm, DestinationUpdate, GetDestinationsRes } from '@/config/types/destination.type';
 
 import api from '.';
 import { Pagination } from '../types/general.type';
 
 const destinationApi = {
-  getDestinations: (
-    page: Pagination,
-  ): Promise<{
-    destinations: Destination[];
-  }> => {
+  getDestinations: (page: Pagination): Promise<GetDestinationsRes> => {
     return api.get('/destinations', {
       params: {
         ...page,

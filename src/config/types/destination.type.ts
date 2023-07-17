@@ -1,3 +1,5 @@
+import { PaginationRes } from './general.type';
+
 export type Destination = {
   id: number;
   name: string;
@@ -9,6 +11,11 @@ export type Destination = {
   currency: string;
   area: string;
   location: string;
+};
+
+export type GetDestinationsRes = {
+  destinations: Destination[];
+  pagination: PaginationRes;
 };
 
 export type DestinationForm = Omit<Destination, 'id'>;
