@@ -1,5 +1,6 @@
 import { API_URL } from '@/config/constants/env';
 import cookieHelper from '@/config/helpers/cookie.helper';
+
 import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 const { getCookie } = cookieHelper;

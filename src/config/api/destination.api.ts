@@ -1,6 +1,7 @@
 import {
   Destination,
   DestinationForm,
+  DestinationStats,
   DestinationUpdate,
   GetDestinationsReq,
   GetDestinationsRes,
@@ -9,6 +10,12 @@ import {
 import api from '.';
 
 const destinationApi = {
+  getStats: (): Promise<{
+    destinations: DestinationStats[];
+  }> => {
+    return api.get('/stats/destinations');
+  },
+
   getDestinations: (page: GetDestinationsReq): Promise<GetDestinationsRes> => {
     return api.get('/destinations', {
       params: {

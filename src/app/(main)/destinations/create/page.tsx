@@ -4,8 +4,10 @@ import Link from 'next/link';
 
 import React from 'react';
 
-import DestinationsForm from '@/components/feature/destinations/DestinationsForm';
 import useDocumentTitle from '@/hooks/useDocumentTitle';
+
+import DestinationsForm from '@/components/feature/destinations/DestinationsForm';
+
 import { Breadcrumbs } from '@mantine/core';
 
 const items = [

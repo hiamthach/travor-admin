@@ -45,6 +45,10 @@ module.exports = {
         content: '1.67',
         1: '1',
       },
+
+      width: {
+        desktop: '1440px',
+      },
     },
   },
   plugins: [],

@@ -1,8 +1,9 @@
-import './globals.css';
-import { ReactQueryProvider } from './providers';
+import ThemeProvider from '@/theme/ThemeProvider';
 
 import { AuthProvider } from '@/hooks/useAuth';
-import ThemeProvider from '@/theme/ThemeProvider';
+
+import './globals.css';
+import { ReactQueryProvider } from './providers';
 
 export const metadata = {
   title: 'Travor CMS',

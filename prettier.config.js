@@ -22,8 +22,10 @@ module.exports = {
     '^@/pages/.*$', // Pages
     '^@/components/.*$', // Components
     '^@/config/.*$', // Configs
+    '^@/config/api/.*$', // Api
     '^@/config/helpers/.*$', // Helpers
     '^@/config/constants/.*$', // Constants
+    '^@/config/types/.*$', // Types
     '^@tabler/.*$',
     '^[./]', // Other imports
     '.*', // Any uncaught imports

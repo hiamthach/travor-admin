@@ -1,7 +1,9 @@
 'use client';
 
-import AuthConsumer from '@/hooks/useAuth';
 import ThemeProvider from '@/theme/ThemeProvider';
+
+import AuthConsumer from '@/hooks/useAuth';
+
 import { Button, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 

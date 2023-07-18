@@ -13,6 +13,11 @@ export type Destination = {
   location: string;
 };
 
+export type DestinationStats = {
+  id: number;
+  name: string;
+};
+
 export type GetDestinationsReq = {
   page: number;
   page_size: number;
