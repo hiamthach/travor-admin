@@ -18,7 +18,6 @@ api.interceptors.request.use(
     const token = getCookie('accessToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
-      config.headers['Content-Type'] = 'application/json';
     }
     return config;
   },

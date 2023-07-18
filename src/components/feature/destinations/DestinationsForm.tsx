@@ -2,20 +2,24 @@
 
 import { useRouter } from 'next/navigation';
 
+import { IconX } from '@tabler/icons-react';
 import { useMutation } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 
 import CustomInput from '@/components/shared/CustomInput';
 import CustomTextarea from '@/components/shared/CustomTextarea';
 
 import destinationApi from '@/config/api/destination.api';
+import galleriesApi from '@/config/api/gallery.api';
+import { generateBlobUrl } from '@/config/helpers/image.helper';
 import toastHelpers from '@/config/helpers/toast.helper';
 import { Destination, DestinationForm } from '@/config/types/destination.type';
 
-import { Button } from '@mantine/core';
+import { Button, FileButton, Image, Overlay } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 const { createDestination, updateDestination } = destinationApi;
+const { upload, addImageList } = galleriesApi;
 
 interface Props {
   isEdit?: boolean;
@@ -25,6 +29,26 @@ interface Props {
 
 const DestinationsForm = ({ isEdit = false, data, refetch }: Props) => {
   const router = useRouter();
+  const [files, setFiles] = useState<File[]>([]);
+
+  const handleUpload = async () => {
+    let urls = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      let formData = new FormData();
+      formData.append('image', file);
+
+      try {
+        const res = await upload(formData);
+        urls.push(res.url);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    return urls;
+  };
+
   const form = useForm<DestinationForm>({
     initialValues: {
       name: isEdit && data ? data.name : '',
@@ -47,7 +71,17 @@ const DestinationsForm = ({ isEdit = false, data, refetch }: Props) => {
           ...values,
         });
       }
-      return createDestination(values);
+
+      const res = await createDestination(values);
+
+      const urls = await handleUpload();
+
+      await addImageList({
+        desId: res.destination.id,
+        urls,
+      });
+
+      return res;
     },
     onMutate: () => {
       toastHelpers.loading('Creating destination...');
@@ -58,7 +92,8 @@ const DestinationsForm = ({ isEdit = false, data, refetch }: Props) => {
         refetch();
       }
       form.reset();
-      router.push('/destinations');
+      setFiles([]);
+      // router.push('/destinations');
     },
     onError: (error: any) => {
       toastHelpers.error(error.message);
@@ -98,6 +133,42 @@ const DestinationsForm = ({ isEdit = false, data, refetch }: Props) => {
         />
       </div>
 
+      <FileButton
+        onChange={(file) => {
+          if (file) {
+            setFiles([...files, ...file]);
+          }
+        }}
+        accept="image/png,image/jpeg,image/jpg,image/webp"
+        multiple={true}
+      >
+        {(props) => <Button {...props}>Upload image</Button>}
+      </FileButton>
+
+      <div className="flex gap-3 flex-wrap col-span-2">
+        {files?.map((file, index) => {
+          return (
+            <div className="group w-fit relative" key={index}>
+              <Image withPlaceholder width={200} height={120} alt="" src={generateBlobUrl(file)} key={index} />
+              <div
+                className="absolute top-0 left-0 right-0 w-full h-full z-10 group-hover:flex items-center justify-center hidden"
+                style={{
+                  backgroundColor: 'rgba(0,0,0,0.5)',
+                }}
+              >
+                <IconX
+                  size={32}
+                  color="#fff"
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setFiles(files.filter((_, i) => i !== index));
+                  }}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
       <div className="col-span-2 text-right">
         <Button type="submit" size="lg">
           Submit

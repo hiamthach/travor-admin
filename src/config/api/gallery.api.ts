@@ -12,12 +12,15 @@ const galleriesApi = {
   },
 
   upload: (
-    desId: number,
     formData: FormData,
   ): Promise<{
     url: string;
   }> => {
-    return api.post(`/galleries/${desId}`, formData);
+    return api.post(`/upload`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   },
 
   addImage: (body: AddImageReq): Promise<GalleryImg> => {
@@ -25,7 +28,7 @@ const galleriesApi = {
   },
 
   addImageList: (body: AddListImageReq): Promise<GalleryImg[]> => {
-    return api.post(`/galleries`, body);
+    return api.post(`/galleries/list`, body);
   },
 
   delete: (

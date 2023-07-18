@@ -28,7 +28,11 @@ const destinationApi = {
     return api.get(`/destinations/${id}`);
   },
 
-  createDestination: (destination: DestinationForm): Promise<Destination> => {
+  createDestination: (
+    destination: DestinationForm,
+  ): Promise<{
+    destination: Destination;
+  }> => {
     return api.post('/destinations', destination);
   },
 

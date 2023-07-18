@@ -26,7 +26,8 @@ module.exports = {
     '^@/config/helpers/.*$', // Helpers
     '^@/config/constants/.*$', // Constants
     '^@/config/types/.*$', // Types
-    '^@tabler/.*$',
+    '^@tanstack/.*$', // TanStack
+    '^@tabler/.*$', // Tabler
     '^[./]', // Other imports
     '.*', // Any uncaught imports
   ],
