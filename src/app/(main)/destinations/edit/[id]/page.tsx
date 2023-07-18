@@ -10,10 +10,12 @@ import useDocumentTitle from '@/hooks/useDocumentTitle';
 import DestinationsForm from '@/components/feature/destinations/DestinationsForm';
 
 import destinationApi from '@/config/api/destination.api';
+import galleriesApi from '@/config/api/gallery.api';
 
 import { Breadcrumbs, Loader } from '@mantine/core';
 
 const { getDestinationById } = destinationApi;
+const { getGalleries } = galleriesApi;
 
 const items = [
   { title: 'Home', href: '/' },
@@ -38,6 +40,10 @@ const EditDestination = ({
     return getDestinationById(params.id);
   });
 
+  const { data: galleries, refetch: refetchGallery } = useQuery(['galleries', params.id], async () => {
+    return getGalleries(params.id);
+  });
+
   if (isError) {
     return null;
   }
@@ -53,7 +59,15 @@ const EditDestination = ({
           <Loader variant="dots" />
         </div>
       )}
-      {data && <DestinationsForm isEdit={true} data={data} refetch={refetch} />}
+      {data && (
+        <DestinationsForm
+          isEdit={true}
+          data={data}
+          refetch={refetch}
+          galleries={galleries?.images || []}
+          refetchGallery={refetchGallery}
+        />
+      )}
     </div>
   );
 };

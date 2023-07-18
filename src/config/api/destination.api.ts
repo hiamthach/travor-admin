@@ -36,7 +36,11 @@ const destinationApi = {
     return api.post('/destinations', destination);
   },
 
-  updateDestination: (destination: DestinationUpdate): Promise<Destination> => {
+  updateDestination: (
+    destination: DestinationUpdate,
+  ): Promise<{
+    destination: Destination;
+  }> => {
     return api.put(`/destinations/${destination.id}`, destination);
   },
 

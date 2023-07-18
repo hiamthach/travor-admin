@@ -84,7 +84,7 @@ const DestinationsTable = ({ destinations, refetch }: Props) => {
         ))}
       </tbody>
 
-      <Modal size={'lg'} opened={opened} onClose={close} title={'View Destination'}>
+      <Modal size={'xl'} opened={opened} onClose={close} title={<h3 className="text-heading">View Destination</h3>}>
         {viewDestination && <DestinationsView data={viewDestination} />}
       </Modal>
     </Table>

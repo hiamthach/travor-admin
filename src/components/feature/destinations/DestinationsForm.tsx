@@ -14,20 +14,23 @@ import galleriesApi from '@/config/api/gallery.api';
 import { generateBlobUrl } from '@/config/helpers/image.helper';
 import toastHelpers from '@/config/helpers/toast.helper';
 import { Destination, DestinationForm } from '@/config/types/destination.type';
+import { GalleryImg } from '@/config/types/gallery.type';
 
-import { Button, FileButton, Image, Overlay } from '@mantine/core';
+import { Button, FileButton, Image } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 const { createDestination, updateDestination } = destinationApi;
-const { upload, addImageList } = galleriesApi;
+const { upload, addImageList, deleteImg } = galleriesApi;
 
 interface Props {
   isEdit?: boolean;
   data?: Destination;
+  galleries?: GalleryImg[];
   refetch?: () => void;
+  refetchGallery?: () => void;
 }
 
-const DestinationsForm = ({ isEdit = false, data, refetch }: Props) => {
+const DestinationsForm = ({ isEdit = false, data, refetch, galleries, refetchGallery }: Props) => {
   const router = useRouter();
   const [files, setFiles] = useState<File[]>([]);
 
@@ -66,10 +69,17 @@ const DestinationsForm = ({ isEdit = false, data, refetch }: Props) => {
   const { mutate } = useMutation({
     mutationFn: async (values: DestinationForm) => {
       if (isEdit) {
-        return updateDestination({
+        const res = await updateDestination({
           id: data?.id,
           ...values,
         });
+        const urls = await handleUpload();
+
+        await addImageList({
+          desId: res.destination.id,
+          urls,
+        });
+        return;
       }
 
       const res = await createDestination(values);
@@ -93,7 +103,7 @@ const DestinationsForm = ({ isEdit = false, data, refetch }: Props) => {
       }
       form.reset();
       setFiles([]);
-      // router.push('/destinations');
+      router.push('/destinations');
     },
     onError: (error: any) => {
       toastHelpers.error(error.message);
@@ -146,6 +156,32 @@ const DestinationsForm = ({ isEdit = false, data, refetch }: Props) => {
       </FileButton>
 
       <div className="flex gap-3 flex-wrap col-span-2">
+        {galleries &&
+          galleries.map((gallery, index) => {
+            return (
+              <div className="group w-fit relative" key={index}>
+                <Image withPlaceholder width={200} height={120} alt="" src={gallery.url} key={index} />
+                <div
+                  className="absolute top-0 left-0 right-0 w-full h-full z-10 group-hover:flex items-center justify-center hidden"
+                  style={{
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                  }}
+                >
+                  <IconX
+                    size={32}
+                    color="#fff"
+                    className="cursor-pointer"
+                    onClick={async () => {
+                      await deleteImg(gallery.id);
+                      if (refetchGallery) {
+                        refetchGallery();
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+            );
+          })}
         {files?.map((file, index) => {
           return (
             <div className="group w-fit relative" key={index}>

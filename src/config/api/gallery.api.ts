@@ -4,7 +4,7 @@ import api from '.';
 
 const galleriesApi = {
   getGalleries: (
-    desId: number,
+    desId: number | string,
   ): Promise<{
     images: GalleryImg[];
   }> => {
@@ -31,7 +31,7 @@ const galleriesApi = {
     return api.post(`/galleries/list`, body);
   },
 
-  delete: (
+  deleteImg: (
     id: number,
   ): Promise<{
     success: boolean;
