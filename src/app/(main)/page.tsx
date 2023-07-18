@@ -2,8 +2,11 @@
 
 import { IconMap2, IconPlaneDeparture, IconUser } from '@tabler/icons-react';
 
+import useDocumentTitle from '@/hooks/useDocumentTitle';
+
 import { withAuth } from '@/hocs/withAuth';
-import { Center, Group, Paper, RingProgress, SimpleGrid, Text } from '@mantine/core';
+
+import { Center, Group, Paper, SimpleGrid, Text } from '@mantine/core';
 
 interface IStat {
   name: string;
@@ -30,8 +33,10 @@ const stats: IStat[] = [
 ];
 
 const HomePage = () => {
+  useDocumentTitle('Dashboard');
+
   return (
-    <div className="w-full py-6 px-10 max-w-5xl">
+    <div className="w-full max-w-desktop">
       <SimpleGrid cols={3} className="w-full">
         {stats.map((stat, index) => {
           return (

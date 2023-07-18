@@ -2,6 +2,7 @@ import { notifications } from '@mantine/notifications';
 
 const toastHelpers = {
   success: (message: string) => {
+    notifications.clean();
     notifications.show({
       title: 'Success',
       message,
@@ -10,6 +11,7 @@ const toastHelpers = {
   },
 
   error: (message: string) => {
+    notifications.clean();
     notifications.show({
       title: 'Error',
       message,
@@ -18,10 +20,21 @@ const toastHelpers = {
   },
 
   info: (message: string) => {
+    notifications.clean();
     notifications.show({
       title: 'Info',
       message,
       color: 'blue',
+    });
+  },
+
+  loading: (message: string) => {
+    notifications.clean();
+    notifications.show({
+      title: 'Loading',
+      message,
+      color: 'cyan',
+      loading: true,
     });
   },
 };

@@ -1,7 +1,9 @@
-import './globals.css';
+import ThemeProvider from '@/theme/ThemeProvider';
 
 import { AuthProvider } from '@/hooks/useAuth';
-import ThemeProvider from '@/theme/ThemeProvider';
+
+import './globals.css';
+import { ReactQueryProvider } from './providers';
 
 export const metadata = {
   title: 'Travor CMS',
@@ -13,9 +15,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head></head>
       <body>
-        <ThemeProvider>
-          <AuthProvider>{children}</AuthProvider>
-        </ThemeProvider>
+        <ReactQueryProvider>
+          <ThemeProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </ThemeProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

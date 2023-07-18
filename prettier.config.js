@@ -14,16 +14,20 @@ module.exports = {
     '^next/.*$', // Next-related imports
     'react', // React
     '^react-.*$', // React-related imports
-    '^theme/.*$', // Theme
-    '^content/.*$', // Contents
-    '^contexts/.*$', // Contexts
-    '^hooks/.*$', // Hooks
-    '^hocs/.*$', // HOCs
-    '^pages/.*$', // Pages
-    '^components/.*$', // Components
-    '^config/.*$', // Configs
-    '^config/helpers/.*$', // Helpers
-    '^config/constants/.*$', // Constants
+    '^@/theme/.*$', // Theme
+    '^@/content/.*$', // Contents
+    '^@/contexts/.*$', // Contexts
+    '^@/hooks/.*$', // Hooks
+    '^@/hocs/.*$', // HOCs
+    '^@/pages/.*$', // Pages
+    '^@/components/.*$', // Components
+    '^@/config/.*$', // Configs
+    '^@/config/api/.*$', // Api
+    '^@/config/helpers/.*$', // Helpers
+    '^@/config/constants/.*$', // Constants
+    '^@/config/types/.*$', // Types
+    '^@tanstack/.*$', // TanStack
+    '^@tabler/.*$', // Tabler
     '^[./]', // Other imports
     '.*', // Any uncaught imports
   ],

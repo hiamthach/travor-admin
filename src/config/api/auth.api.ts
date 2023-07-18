@@ -1,6 +1,6 @@
-import api from '.';
-
 import { LoginReq, LoginRes, RenewTokenReq, RenewTokenRes } from '@/config/types/auth.type';
+
+import api from '.';
 
 const authApi = {
   signIn: (data: LoginReq): Promise<LoginRes> => api.post('/auth/login', data),

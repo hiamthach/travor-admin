@@ -5,9 +5,10 @@ import { usePathname } from 'next/navigation';
 
 import { IconLogout, IconMap2, IconPlaneDeparture } from '@tabler/icons-react';
 
+import AuthConsumer from '@/hooks/useAuth';
+
 import Logo from '../shared/Logo';
 
-import AuthConsumer from '@/hooks/useAuth';
 import { clsx } from '@mantine/core';
 
 const listNav = [
