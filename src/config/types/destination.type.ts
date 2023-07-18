@@ -13,6 +13,12 @@ export type Destination = {
   location: string;
 };
 
+export type GetDestinationsReq = {
+  page: number;
+  page_size: number;
+  keyword: string;
+};
+
 export type GetDestinationsRes = {
   destinations: Destination[];
   pagination: PaginationRes;

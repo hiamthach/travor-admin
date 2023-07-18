@@ -1,10 +1,12 @@
 'use client';
 
 import Link from 'next/link';
+// import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import { IconPlus, IconSearch } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import useDocumentTitle from '@/hooks/useDocumentTitle';
 
@@ -29,13 +31,27 @@ const { getDestinations } = destinationApi;
 const DestinationsPage = () => {
   useDocumentTitle('Destinations');
   const [page, setPage] = useState(1);
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+
+  const keyword = searchParams.get('keyword');
+
+  // create handleSearch function when user press Enter
+  const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      // set query string ?keyword=
+      router.push('/destinations?keyword=' + e.currentTarget.value);
+    }
+  };
 
   const { data, isLoading, isError, refetch } = useQuery(
-    ['destinations', page],
+    ['destinations', page, keyword],
     async () => {
       const res = await getDestinations({
         page: page,
         page_size: PAGINATION_LIMIT,
+        keyword: keyword || '',
       });
 
       return res;
@@ -55,7 +71,14 @@ const DestinationsPage = () => {
 
       <h3 className="font-bold text-24 text-heading mt-5">Destinations</h3>
       <div className="flex justify-between items-center my-5">
-        <TextInput placeholder="Search" width={360} icon={<IconSearch size={18} />} className="w-[300px]" />
+        <TextInput
+          placeholder="Search"
+          width={360}
+          icon={<IconSearch size={18} />}
+          className="w-[300px]"
+          onKeyDown={handleSearch}
+          defaultValue={keyword || ''}
+        />
         <Link href="/destinations/create">
           <Button leftIcon={<IconPlus size={20} />}>New</Button>
         </Link>
