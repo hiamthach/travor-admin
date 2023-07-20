@@ -1,7 +1,7 @@
 import { API_URL } from '@/config/constants/env';
 import cookieHelper from '@/config/helpers/cookie.helper';
 
-import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 const { getCookie } = cookieHelper;
 
@@ -21,7 +21,7 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error: any) => {
+  (error: AxiosError) => {
     // Handle request error here
     return Promise.reject(error);
   },
@@ -32,7 +32,7 @@ api.interceptors.response.use(
     // Modify the response data here
     return response && response.data;
   },
-  (error: any) => {
+  (error: AxiosError) => {
     // Handle response error here
     return Promise.reject(error);
   },
