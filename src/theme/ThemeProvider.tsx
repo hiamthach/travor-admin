@@ -70,6 +70,23 @@ const ThemeProvider = ({ children }: { children: ReactNode }) => {
               },
             },
           },
+
+          MultiSelect: {
+            styles: {
+              input: {
+                backgroundColor: '#fff',
+                padding: '5px 20px',
+                borderRadius: '24px',
+                color: '#595959',
+                fontSize: '14px',
+                lineHeight: '20px',
+                height: 'fit-content',
+              },
+              label: {
+                marginBottom: '0',
+              },
+            },
+          },
         },
       }}
       withCSSVariables

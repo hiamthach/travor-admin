@@ -94,10 +94,10 @@ const DestinationsForm = ({ isEdit = false, data, refetch, galleries, refetchGal
       return res;
     },
     onMutate: () => {
-      toastHelpers.loading('Creating destination...');
+      toastHelpers.loading(isEdit ? 'Updating destination' : 'Creating destination...');
     },
     onSuccess: () => {
-      toastHelpers.success('Destination created!');
+      toastHelpers.success(isEdit ? 'Destination Updated' : 'Destination created!');
       if (refetch) {
         refetch();
       }

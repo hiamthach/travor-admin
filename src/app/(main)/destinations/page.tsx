@@ -1,12 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-// import { useRouter, useSearchParams } from 'next/navigation';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import { IconPlus, IconSearch } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import useDocumentTitle from '@/hooks/useDocumentTitle';
 
