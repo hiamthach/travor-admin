@@ -17,6 +17,11 @@ export type Package = {
   types: PackageType[];
 };
 
+export type PackageStats = {
+  id: number;
+  name: string;
+};
+
 export type PackageRes = {
   package: Package;
 };

@@ -5,6 +5,7 @@ import {
   PackageCreate,
   PackageForm,
   PackageRes,
+  PackageStats,
   PackageType,
   PackageUpdate,
 } from '@/config/types/package.type';
@@ -12,6 +13,12 @@ import {
 import api from '.';
 
 const packageApi = {
+  getStats: (): Promise<{
+    packages: PackageStats[];
+  }> => {
+    return api.get('/stats/packages');
+  },
+
   getPackages: (params: GetPackagesReq): Promise<GetPackagesRes> => {
     return api.get('/packages', { params });
   },
