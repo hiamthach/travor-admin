@@ -96,7 +96,7 @@ const PackagesTable = ({ packages, refetch }: Props) => {
         ))}
       </tbody>
 
-      <Modal size={'xl'} opened={opened} onClose={close} title={<h3 className="text-heading">View package</h3>}>
+      <Modal size={'xl'} opened={opened} onClose={close} title={'View package'}>
         {viewPackage && <PackagesView data={viewPackage} />}
       </Modal>
     </Table>

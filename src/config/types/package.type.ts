@@ -6,7 +6,7 @@ export type PackageType = {
 };
 
 export type Package = {
-  id: number;
+  id: number | string;
   name: string;
   details: string;
   price: number;
@@ -40,6 +40,6 @@ export type PackageCreate = Omit<Package, 'id' | 'types'> & {
   types: number[];
 };
 
-export type PackageUpdate = Partial<Omit<Package, 'types'>> & {
+export type PackageUpdate = Omit<Package, 'types'> & {
   types: number[];
 };

@@ -3,18 +3,20 @@
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { IconPlus, IconSearch } from '@tabler/icons-react';
+import { IconEdit, IconPlus, IconSearch } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
 import useDocumentTitle from '@/hooks/useDocumentTitle';
 
 import PackagesTable from '@/components/feature/packages/PackagesTable';
+import TypesMgm from '@/components/feature/packages/TypesMgm';
 
 import packageApi from '@/config/api/package.api';
 import { PAGINATION_LIMIT } from '@/config/constants/general';
 
-import { Breadcrumbs, Button, Pagination, Skeleton, TextInput } from '@mantine/core';
+import { Breadcrumbs, Button, Modal, Pagination, Skeleton, TextInput } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
 
 const { getPackages } = packageApi;
 
@@ -30,6 +32,7 @@ const items = [
 const PackagesPage = () => {
   useDocumentTitle('Packages');
 
+  const [opened, { open, close }] = useDisclosure(false);
   const [page, setPage] = useState(1);
   const router = useRouter();
 
@@ -79,9 +82,14 @@ const PackagesPage = () => {
           onKeyDown={handleSearch}
           defaultValue={keyword || ''}
         />
-        <Link href="/packages/create">
-          <Button leftIcon={<IconPlus size={20} />}>New</Button>
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link href="/packages/create">
+            <Button leftIcon={<IconPlus size={20} />}>New</Button>
+          </Link>
+          <Button leftIcon={<IconEdit size={20} />} color="teal" onClick={open}>
+            Types
+          </Button>
+        </div>
       </div>
 
       <div className="">
@@ -99,6 +107,10 @@ const PackagesPage = () => {
           )}
         </Skeleton>
       </div>
+
+      <Modal opened={opened} onClose={close} size={'xl'} title="Types Management">
+        <TypesMgm />
+      </Modal>
     </div>
   );
 };
