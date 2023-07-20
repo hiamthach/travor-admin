@@ -36,7 +36,7 @@ const packageApi = {
   },
 
   deletePackage: (
-    id: number,
+    id: number | string,
   ): Promise<{
     success: boolean;
   }> => {
