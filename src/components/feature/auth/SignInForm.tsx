@@ -1,7 +1,5 @@
 'use client';
 
-import ThemeProvider from '@/theme/ThemeProvider';
-
 import AuthConsumer from '@/hooks/useAuth';
 
 import { Button, TextInput } from '@mantine/core';
@@ -29,7 +27,7 @@ const SignInForm = () => {
         <TextInput placeholder="Username*" {...form.getInputProps('username')} className="w-full" />
         <TextInput placeholder="Password*" type="password" {...form.getInputProps('password')} className="w-full" />
         <Button type="submit" className="mx-auto leading-content">
-          Submit
+          Sign In
         </Button>
       </form>
     </div>

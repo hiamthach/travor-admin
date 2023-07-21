@@ -7,6 +7,7 @@ import { CookiesProvider } from 'react-cookie';
 import { useCookies } from 'react-cookie';
 
 import authApi from '@/config/api/auth.api';
+import { USER_ADMIN } from '@/config/constants/user.const';
 import toastHelpers from '@/config/helpers/toast.helper';
 import { LoginReq } from '@/config/types/auth.type';
 
@@ -89,9 +90,9 @@ function useAuth() {
     signIn: async (body: LoginReq) => {
       try {
         const res = await signIn(body);
-        if (res) {
+        if (res && res.user.role === USER_ADMIN) {
           setIsAuth(true);
-          setCurrentUser(res);
+          setCurrentUser(res.user);
 
           // set cookie
           setCookie('refreshToken', res.refresh_token, {
@@ -113,10 +114,10 @@ function useAuth() {
 
           router.push('/');
         } else {
-          toastHelpers.error('Login failed');
+          toastHelpers.error('No permission');
         }
       } catch (error) {
-        toastHelpers.error('Login failed');
+        toastHelpers.error('Wrong username or password');
       }
     },
 

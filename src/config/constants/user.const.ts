@@ -1,4 +1,7 @@
+export const USER_ADMIN = 1000;
+export const USER_USER = 1;
+
 export const USER_ROLES = {
-  0: 'ADMIN',
-  1: 'USER',
+  [USER_ADMIN]: 'ADMIN',
+  [USER_USER]: 'USER',
 };

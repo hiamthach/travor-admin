@@ -11,6 +11,7 @@ export interface LoginRes {
     full_name: string;
     created_at: string;
     password_changed_at: string;
+    role: number;
   };
 
   session_id: string;
