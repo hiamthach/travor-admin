@@ -1,14 +1,13 @@
-import { User } from 'next-auth';
-
 export interface LoginReq {
   username: string;
   password: string;
 }
 
 export interface LoginRes {
-  user: User & {
+  user: {
     username: string;
     email: string;
+    phone: string;
     full_name: string;
     created_at: string;
     password_changed_at: string;

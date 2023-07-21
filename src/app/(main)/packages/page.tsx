@@ -13,7 +13,7 @@ import PackagesTable from '@/components/feature/packages/PackagesTable';
 import TypesMgm from '@/components/feature/packages/TypesMgm';
 
 import packageApi from '@/config/api/package.api';
-import { PAGINATION_LIMIT } from '@/config/constants/general';
+import { PAGINATION_LIMIT } from '@/config/constants/general.const';
 
 import { Breadcrumbs, Button, Modal, Pagination, Skeleton, TextInput } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
@@ -72,7 +72,7 @@ const PackagesPage = () => {
     <div>
       <Breadcrumbs>{items}</Breadcrumbs>
 
-      <h3 className="font-bold text-24 text-heading mt-5">Packages</h3>
+      <h1 className="font-bold text-24 text-heading mt-5">Packages</h1>
       <div className="flex justify-between items-center my-5">
         <TextInput
           placeholder="Search"

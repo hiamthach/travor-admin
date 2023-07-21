@@ -1,4 +1,4 @@
-import { API_URL } from '@/config/constants/env';
+import { API_URL } from '@/config/constants/env.const';
 import cookieHelper from '@/config/helpers/cookie.helper';
 
 import axios, { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';

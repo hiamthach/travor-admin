@@ -12,7 +12,7 @@ import useDocumentTitle from '@/hooks/useDocumentTitle';
 import DestinationsTable from '@/components/feature/destinations/DestinationsTable';
 
 import destinationApi from '@/config/api/destination.api';
-import { PAGINATION_LIMIT } from '@/config/constants/general';
+import { PAGINATION_LIMIT } from '@/config/constants/general.const';
 
 import { Breadcrumbs, Button, Pagination, Skeleton, TextInput } from '@mantine/core';
 
@@ -68,7 +68,7 @@ const DestinationsPage = () => {
     <div>
       <Breadcrumbs>{items}</Breadcrumbs>
 
-      <h3 className="font-bold text-24 text-heading mt-5">Destinations</h3>
+      <h1 className="font-bold text-24 text-heading mt-5">Destinations</h1>
       <div className="flex justify-between items-center my-5">
         <TextInput
           placeholder="Search"

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 
-import { IconMap2, IconPlaneDeparture, IconUser } from '@tabler/icons-react';
+import { IconMap2, IconPlaneDeparture, IconUsers } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 
 import useDocumentTitle from '@/hooks/useDocumentTitle';
@@ -11,8 +11,10 @@ import { withAuth } from '@/hocs/withAuth';
 
 import destinationApi from '@/config/api/destination.api';
 import packageApi from '@/config/api/package.api';
+import userApi from '@/config/api/user.api';
 
 import { Center, Group, Paper, SimpleGrid, Text } from '@mantine/core';
+import get from 'lodash/get';
 
 interface IStat {
   name: string;
@@ -32,23 +34,27 @@ const HomePage = () => {
     return packageApi.getStats();
   });
 
+  const { data: userList } = useQuery(['users', 'stats'], () => {
+    return userApi.getUsersStats();
+  });
+
   const stats: IStat[] = [
     {
       name: 'Destinations',
-      value: desList?.destinations.length || 0,
+      value: get(desList, 'destinations.length', 0),
       icon: <IconMap2 size={24} className="text-secondary" />,
       href: '/destinations',
     },
     {
       name: 'Packages',
-      value: pkgList?.packages.length || 0,
+      value: get(pkgList, 'packages.length', 0),
       icon: <IconPlaneDeparture size={24} className="text-primary" />,
       href: '/packages',
     },
     {
       name: 'Users',
-      value: 30,
-      icon: <IconUser size={24} className="text-green-400" />,
+      value: get(userList, 'users.length', 0),
+      icon: <IconUsers size={24} className="text-green-400" />,
       href: '/users',
     },
   ];

@@ -52,7 +52,7 @@ const EditDestination = ({
     <div>
       <Breadcrumbs>{items}</Breadcrumbs>
 
-      <h3 className="my-5 font-bold text-24 text-heading">Edit Destination</h3>
+      <h1 className="my-5 font-bold text-24 text-heading">Edit Destination</h1>
 
       {isFetching && (
         <div className="min-h-[50vh] w-full flex justify-center items-center">

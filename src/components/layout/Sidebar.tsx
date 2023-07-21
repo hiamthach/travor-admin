@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { IconLogout, IconMap2, IconPlaneDeparture } from '@tabler/icons-react';
+import { IconLogout, IconMap2, IconPlaneDeparture, IconUsers } from '@tabler/icons-react';
 
 import AuthConsumer from '@/hooks/useAuth';
 
@@ -22,6 +22,12 @@ const listNav = [
     name: 'Packages',
     url: '/packages',
     icon: <IconPlaneDeparture />,
+  },
+
+  {
+    name: 'Users',
+    url: '/users',
+    icon: <IconUsers />,
   },
 ];
 

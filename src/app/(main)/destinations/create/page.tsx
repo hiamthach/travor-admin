@@ -27,7 +27,7 @@ const CreateDestination = () => {
     <div>
       <Breadcrumbs>{items}</Breadcrumbs>
 
-      <h3 className="my-5 font-bold text-24 text-heading">Create Destination</h3>
+      <h1 className="my-5 font-bold text-24 text-heading">Create Destination</h1>
 
       <DestinationsForm />
     </div>

@@ -62,7 +62,6 @@ const PackagesForm = ({ isEdit, data, refetch }: Props) => {
       }
 
       if (isEdit && data) {
-        console.log(data);
         return packageApi.updatePackage({
           id: data.id,
           name: values.name,
