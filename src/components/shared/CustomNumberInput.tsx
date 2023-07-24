@@ -1,20 +1,19 @@
 import React from 'react';
 
-import { TextInput, TextInputProps } from '@mantine/core';
+import { NumberInput, NumberInputProps } from '@mantine/core';
 
-interface Props extends TextInputProps {
+interface Props extends NumberInputProps {
   label: string;
   placeholder?: string;
-  isTextarea?: boolean;
 }
 
-const CustomInput = ({ label, placeholder, required, isTextarea, ...rest }: Props) => {
+const CustomInput = ({ label, placeholder, required, ...rest }: Props) => {
   return (
     <div className="flex flex-col gap-2">
       <label className="text-16 font-medium ml-1">
         {label} {required && <span className="text-red-500">*</span>}
       </label>
-      <TextInput {...rest} required placeholder={placeholder} />
+      <NumberInput {...rest} required placeholder={placeholder} />
     </div>
   );
 };

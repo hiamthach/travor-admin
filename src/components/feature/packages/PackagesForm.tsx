@@ -7,6 +7,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 
 import CustomInput from '@/components/shared/CustomInput';
+import CustomNumberInput from '@/components/shared/CustomNumberInput';
 import CustomTextarea from '@/components/shared/CustomTextarea';
 
 import destinationApi from '@/config/api/destination.api';
@@ -108,18 +109,21 @@ const PackagesForm = ({ isEdit, data, refetch }: Props) => {
     >
       <CustomInput label="Name" placeholder="Ex: France Tour Package" required {...form.getInputProps('name')} />
       <CustomInput label="Duration" placeholder="Ex: 8 Day 7 Night" required {...form.getInputProps('duration')} />
-      <CustomInput
+      <CustomNumberInput
         label="Price"
         placeholder="Ex: 1000"
         min={0}
         type="number"
         required
+        hideControls
         {...form.getInputProps('price')}
       />
-      <CustomInput
+
+      <CustomNumberInput
         label="Number of People"
         placeholder="Ex: 2"
-        type="number"
+        min={1}
+        hideControls
         required
         {...form.getInputProps('number_people')}
       />

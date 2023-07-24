@@ -7,6 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
 
 import CustomInput from '@/components/shared/CustomInput';
+import CustomNumberInput from '@/components/shared/CustomNumberInput';
 import CustomTextarea from '@/components/shared/CustomTextarea';
 
 import destinationApi from '@/config/api/destination.api';
@@ -124,11 +125,12 @@ const DestinationsForm = ({ isEdit = false, data, refetch, galleries, refetchGal
       <CustomInput label="Name" placeholder="Ex: Rome" required {...form.getInputProps('name')} />
       <CustomInput label="Country" placeholder="Ex: Italia" required {...form.getInputProps('country')} />
       <CustomInput label="Language" placeholder="Ex: Italian" required {...form.getInputProps('language')} />
-      <CustomInput
+      <CustomNumberInput
         label="Price"
         placeholder="Ex: 1000"
         type="number"
         min={0}
+        hideControls
         required
         {...form.getInputProps('price')}
       />
