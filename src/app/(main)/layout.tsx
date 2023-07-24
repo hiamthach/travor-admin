@@ -1,4 +1,8 @@
+'use client';
+
 import { ReactNode } from 'react';
+
+import { withAuth } from '@/hocs/withAuth';
 
 import Sidebar from '@/components/layout/Sidebar';
 
@@ -14,4 +18,4 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default MainLayout;
+export default withAuth(MainLayout);
