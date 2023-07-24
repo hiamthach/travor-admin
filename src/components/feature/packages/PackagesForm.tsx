@@ -12,7 +12,7 @@ import CustomTextarea from '@/components/shared/CustomTextarea';
 import destinationApi from '@/config/api/destination.api';
 import galleriesApi from '@/config/api/gallery.api';
 import packageApi from '@/config/api/package.api';
-import { generateBlobUrl } from '@/config/helpers/image.helper';
+import { checkImageSize, generateBlobUrl } from '@/config/helpers/image.helper';
 import toastHelpers from '@/config/helpers/toast.helper';
 import { Package, PackageForm } from '@/config/types/package.type';
 
@@ -170,7 +170,7 @@ const PackagesForm = ({ isEdit, data, refetch }: Props) => {
 
       <FileButton
         onChange={(file) => {
-          if (file) {
+          if (file && !checkImageSize(file)) {
             setFile(file);
           }
         }}

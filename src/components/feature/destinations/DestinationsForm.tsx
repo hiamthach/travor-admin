@@ -11,7 +11,7 @@ import CustomTextarea from '@/components/shared/CustomTextarea';
 
 import destinationApi from '@/config/api/destination.api';
 import galleriesApi from '@/config/api/gallery.api';
-import { generateBlobUrl } from '@/config/helpers/image.helper';
+import { checkImageSize, generateBlobUrl } from '@/config/helpers/image.helper';
 import toastHelpers from '@/config/helpers/toast.helper';
 import { Destination, DestinationForm } from '@/config/types/destination.type';
 import { GalleryImg } from '@/config/types/gallery.type';
@@ -73,23 +73,27 @@ const DestinationsForm = ({ isEdit = false, data, refetch, galleries, refetchGal
           id: data?.id,
           ...values,
         });
+        if (files.length > 0) {
+          const urls = await handleUpload();
+
+          await addImageList({
+            desId: res.destination.id,
+            urls,
+          });
+        }
+        return;
+      }
+
+      const res = await createDestination(values);
+
+      if (files.length > 0) {
         const urls = await handleUpload();
 
         await addImageList({
           desId: res.destination.id,
           urls,
         });
-        return;
       }
-
-      const res = await createDestination(values);
-
-      const urls = await handleUpload();
-
-      await addImageList({
-        desId: res.destination.id,
-        urls,
-      });
 
       return res;
     },
@@ -146,7 +150,18 @@ const DestinationsForm = ({ isEdit = false, data, refetch, galleries, refetchGal
       <FileButton
         onChange={(file) => {
           if (file) {
-            setFiles([...files, ...file]);
+            let check = false;
+            for (let i = 0; i < file.length; i++) {
+              if (checkImageSize(file[i])) {
+                check = true;
+                break;
+              }
+            }
+            if (!check) {
+              setFiles([...files, ...file]);
+            } else {
+              toastHelpers.error('Image size is larger than 5MB');
+            }
           }
         }}
         accept="image/png,image/jpeg,image/jpg,image/webp"
